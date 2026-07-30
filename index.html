@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planificador de Tareas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-light">
+
+    <div class="container py-4">
+
+        <!-- Header -->
+        <header class="card shadow-sm mb-4">
+            <div class="card-body text-center">
+                <h1 class="card-title h3 mb-0 fw-bold">Planificador de Tareas</h1>
+            </div>
+        </header>
+
+        <!-- Contenido principal: formulario + lista -->
+        <main class="row g-4">
+
+            <!-- Formulario -->
+            <section class="col-md-6">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h2 class="card-title h5 mb-4">Formulario</h2>
+
+                        <form action="#" method="post">
+                            <div class="mb-3">
+                                <label for="nombre" class="form-label">Nombre de la tarea</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="nombre"
+                                    name="nombre"
+                                    placeholder="Ej: Estudiar JavaScript"
+                                >
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="descripcion" class="form-label">Descripción</label>
+                                <textarea
+                                    class="form-control"
+                                    id="descripcion"
+                                    name="descripcion"
+                                    rows="3"
+                                    placeholder="Describe brevemente la tarea..."
+                                ></textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="fecha" class="form-label">Fecha límite</label>
+                                <input
+                                    type="date"
+                                    class="form-control w-50"
+                                    id="fecha"
+                                    name="fecha"
+                                >
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100">
+                                + Agregar tarea
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Lista de tareas -->
+            <section class="col-md-6">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h2 class="card-title h5 mb-4">Lista de tareas</h2>
+
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex align-items-center gap-3">
+                                <input class="form-check-input flex-shrink-0" type="checkbox" id="tarea1" aria-label="Marcar tarea como completada">
+                                <label class="form-check-label mb-0" for="tarea1">
+                                    Completar el wireframe con HTML y Bootstrap
+                                </label>
+                            </li>
+
+                            <li class="list-group-item d-flex align-items-center gap-3">
+                                <input class="form-check-input flex-shrink-0" type="checkbox" id="tarea2" aria-label="Marcar tarea como completada">
+                                <label class="form-check-label mb-0" for="tarea2">
+                                    Crear el repositorio en GitHub
+                                </label>
+                            </li>
+
+                            <li class="list-group-item d-flex align-items-center gap-3">
+                                <input class="form-check-input flex-shrink-0" type="checkbox" id="tarea3" aria-label="Marcar tarea como completada">
+                                <label class="form-check-label mb-0" for="tarea3">
+                                    Organizar el Sprint 1 en Trello
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
