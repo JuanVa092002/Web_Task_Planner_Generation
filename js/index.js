@@ -1,3 +1,6 @@
+const taskManager = new TaskManager();
+console.log(taskManager.tasks);
+
 const form = document.querySelector('#taskForm');
 
 function validFormFieldInput(data) {
@@ -45,4 +48,14 @@ form.addEventListener('submit', function (event) {
     }
 
     Swal.close();
+});
+
+document.querySelectorAll('.btn-toggle-complete').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+        const card = this.closest('.card');
+        const title = card.querySelector('h5');
+        const completed = title.classList.toggle('text-decoration-line-through');
+        card.classList.toggle('border-success');
+        this.textContent = completed ? 'Marcar pendiente' : 'Completar';
+    });
 });
