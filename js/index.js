@@ -2,6 +2,7 @@ const taskManager = new TaskManager();
 console.log(taskManager.tasks);
 
 const form = document.querySelector('#taskForm');
+const taskList = document.querySelector('#taskList');
 
 function validFormFieldInput(data) {
     const name = data.name.trim();
@@ -47,15 +48,30 @@ form.addEventListener('submit', function (event) {
         return;
     }
 
-    Swal.close();
+    taskManager.addTask(name, description, date, status);
+    taskManager.save();
+    taskManager.render();
+    form.reset();
 });
 
-document.querySelectorAll('.btn-toggle-complete').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-        const card = this.closest('.card');
-        const title = card.querySelector('h5');
+taskList.addEventListener('click', function (event) {
+    const parentTask = event.target.closest('[data-task-id]');
+    if (!parentTask) return;
+
+    if (event.target.classList.contains('btn-toggle-complete')) {
+        const title = parentTask.querySelector('h5');
         const completed = title.classList.toggle('text-decoration-line-through');
-        card.classList.toggle('border-success');
-        this.textContent = completed ? 'Marcar pendiente' : 'Completar';
-    });
+        parentTask.classList.toggle('border-success');
+        event.target.textContent = completed ? 'Marcar pendiente' : 'Completar';
+        return;
+    }
+
+    if (event.target.classList.contains('delete-button')) {
+        const taskId = Number(parentTask.dataset.taskId);
+        taskManager.deleteTask(taskId);
+        taskManager.save();
+        taskManager.render();
+    }
 });
+
+taskManager.render();
