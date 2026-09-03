@@ -54,20 +54,20 @@ form.addEventListener('submit', function (event) {
     form.reset();
 });
 
-taskList.addEventListener('click', function (event) {
-    const parentTask = event.target.closest('[data-task-id]');
-    if (!parentTask) return;
+taskList.addEventListener('click', (event) => {
+    if (event.target.classList.contains('done-button')) {
+        const parentTask = event.target.parentElement;
+        const taskId = Number(parentTask.dataset.taskId);
+        const task = taskManager.getTaskById(taskId);
 
-    if (event.target.classList.contains('btn-toggle-complete')) {
-        const title = parentTask.querySelector('h5');
-        const completed = title.classList.toggle('text-decoration-line-through');
-        parentTask.classList.toggle('border-success');
-        event.target.textContent = completed ? 'Marcar pendiente' : 'Completar';
-        return;
+        task.status = 'DONE';
+        taskManager.render();
     }
 
     if (event.target.classList.contains('delete-button')) {
+        const parentTask = event.target.parentElement;
         const taskId = Number(parentTask.dataset.taskId);
+
         taskManager.deleteTask(taskId);
         taskManager.save();
         taskManager.render();
