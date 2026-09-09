@@ -1,4 +1,5 @@
 const taskManager = new TaskManager();
+taskManager.load();
 console.log(taskManager.tasks);
 
 const form = document.querySelector('#taskForm');
@@ -61,6 +62,7 @@ taskList.addEventListener('click', (event) => {
         const task = taskManager.getTaskById(taskId);
 
         task.status = 'DONE';
+        taskManager.save();
         taskManager.render();
     }
 

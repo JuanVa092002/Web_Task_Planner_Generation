@@ -1,6 +1,6 @@
 # Planificador de Tareas
 
-Aplicación web para registrar y visualizar tareas. En el Sprint 1 se implementa la interfaz con HTML y Bootstrap, las tarjetas de tareas y la validación del formulario con JavaScript y SweetAlert2.
+Aplicación web para registrar, visualizar, actualizar y eliminar tareas. En el Sprint 3 se agrega la persistencia de tareas y `currentId` en LocalStorage.
 
 ## Trello / Jira
 

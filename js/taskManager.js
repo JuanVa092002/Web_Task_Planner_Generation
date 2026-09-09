@@ -2,7 +2,6 @@ class TaskManager {
     constructor(currentId = 0) {
         this.tasks = [];
         this.currentId = currentId;
-        this.load();
     }
 
     addTask(name, description, dueDate, status) {
@@ -27,15 +26,25 @@ class TaskManager {
     }
 
     save() {
-        localStorage.setItem('tasks', JSON.stringify(this.tasks));
-        localStorage.setItem('currentId', String(this.currentId));
+        const tasksJson = JSON.stringify(this.tasks);
+        localStorage.setItem('tasks', tasksJson);
+
+        const currentId = String(this.currentId);
+        localStorage.setItem('currentId', currentId);
     }
 
     load() {
-        const tasks = localStorage.getItem('tasks');
+        const tasksJson = localStorage.getItem('tasks');
+
+        if (tasksJson) {
+            this.tasks = JSON.parse(tasksJson);
+        }
+
         const currentId = localStorage.getItem('currentId');
-        if (tasks) this.tasks = JSON.parse(tasks);
-        if (currentId) this.currentId = Number(currentId);
+
+        if (currentId) {
+            this.currentId = Number(currentId);
+        }
     }
 
     getTaskById(taskId) {
