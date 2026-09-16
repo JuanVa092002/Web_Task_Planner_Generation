@@ -57,7 +57,7 @@ form.addEventListener('submit', async function (event) {
         taskManager.render();
         form.reset();
     } catch (error) {
-        showAlert('error', 'Error de conexión', 'No se pudo guardar la tarea. Verifica que el backend esté encendido.');
+        showAlert('error', 'Error de conexión', 'No se pudo guardar la tarea. Verifica que el API esté disponible.');
     }
 });
 
@@ -95,5 +95,5 @@ taskManager.load()
         taskManager.render();
     })
     .catch(() => {
-        showAlert('error', 'Backend no disponible', 'Inicia el servidor Java en http://localhost:8080 y recarga la página.');
+        showAlert('error', 'Backend no disponible', 'No se pudo conectar con el API. Recarga en unos segundos o verifica el servicio.');
     });
