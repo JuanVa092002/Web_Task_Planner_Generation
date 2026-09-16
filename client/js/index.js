@@ -1,9 +1,16 @@
 const taskManager = new TaskManager();
-taskManager.load();
-console.log(taskManager.tasks);
 
 const form = document.querySelector('#taskForm');
 const taskList = document.querySelector('#taskList');
+
+function showAlert(icon, title, text) {
+    Swal.fire({
+        icon,
+        title,
+        text,
+        confirmButtonColor: '#171412'
+    });
+}
 
 function validFormFieldInput(data) {
     const name = data.name.trim();
@@ -18,7 +25,7 @@ function validFormFieldInput(data) {
     return true;
 }
 
-form.addEventListener('submit', function (event) {
+form.addEventListener('submit', async function (event) {
     event.preventDefault();
 
     const newTaskNameInput = document.querySelector('#newTaskNameInput');
@@ -41,39 +48,52 @@ form.addEventListener('submit', function (event) {
     const data = { name, description, date, status };
 
     if (!validFormFieldInput(data)) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Datos inválidos',
-            text: 'Por favor completa todos los campos: Nombre, Descripción, Fecha de entrega y Estado.'
-        });
+        showAlert('error', 'Datos inválidos', 'Por favor completa todos los campos: Nombre, Descripción, Fecha de entrega y Estado.');
         return;
     }
 
-    taskManager.addTask(name, description, date, status);
-    taskManager.save();
-    taskManager.render();
-    form.reset();
+    try {
+        await taskManager.addTask(name, description, date, status);
+        taskManager.render();
+        form.reset();
+    } catch (error) {
+        showAlert('error', 'Error de conexión', 'No se pudo guardar la tarea. Verifica que el backend esté encendido.');
+    }
 });
 
-taskList.addEventListener('click', (event) => {
+taskList.addEventListener('click', async (event) => {
     if (event.target.classList.contains('done-button')) {
         const parentTask = event.target.parentElement;
         const taskId = Number(parentTask.dataset.taskId);
         const task = taskManager.getTaskById(taskId);
 
         task.status = 'DONE';
-        taskManager.save();
-        taskManager.render();
+        try {
+            await taskManager.updateTask(task);
+            taskManager.render();
+        } catch (error) {
+            showAlert('error', 'Error de conexión', 'No se pudo actualizar la tarea.');
+        }
     }
 
     if (event.target.classList.contains('delete-button')) {
         const parentTask = event.target.parentElement;
         const taskId = Number(parentTask.dataset.taskId);
 
-        taskManager.deleteTask(taskId);
-        taskManager.save();
-        taskManager.render();
+        try {
+            await taskManager.deleteTask(taskId);
+            taskManager.render();
+        } catch (error) {
+            showAlert('error', 'Error de conexión', 'No se pudo eliminar la tarea.');
+        }
     }
 });
 
-taskManager.render();
+taskManager.load()
+    .then(() => {
+        console.log(taskManager.tasks);
+        taskManager.render();
+    })
+    .catch(() => {
+        showAlert('error', 'Backend no disponible', 'Inicia el servidor Java en http://localhost:8080 y recarga la página.');
+    });

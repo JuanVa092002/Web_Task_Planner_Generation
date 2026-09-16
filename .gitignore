@@ -1,0 +1,14 @@
+.DS_Store
+Thumbs.db
+.idea/
+*.iml
+
+server/target/
+server/.env
+server/.idea/
+server/*.iml
+server/.classpath
+server/.project
+server/.settings/
+server/data/
+.vercel/
