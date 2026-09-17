@@ -11,7 +11,21 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <div class="app-shell">
+    <section id="authScreen" class="auth-screen">
+        <div class="auth-card">
+            <p class="brand-kicker">Workspace</p>
+            <h1>Planificador de Tareas</h1>
+            <p class="auth-copy">Inicia sesión o regístrate para ver y gestionar tus tareas.</p>
+            <div class="auth-tabs">
+                <button type="button" id="showSignIn" class="auth-tab is-active">Iniciar sesión</button>
+                <button type="button" id="showSignUp" class="auth-tab">Registrarse</button>
+            </div>
+            <div id="sign-in" class="auth-mount"></div>
+            <div id="sign-up" class="auth-mount is-hidden"></div>
+        </div>
+    </section>
+
+    <div id="appShell" class="app-shell is-hidden">
         <header class="topbar">
             <div class="brand">
                 <span class="brand-mark" aria-hidden="true"></span>
@@ -23,6 +37,7 @@
             <div class="topbar-meta">
                 <span class="meta-chip" id="taskCount">0 tareas</span>
                 <span class="meta-chip meta-chip-live">API conectada</span>
+                <div id="user-button"></div>
             </div>
         </header>
 
@@ -97,7 +112,20 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
     <script src="js/taskManager.js"></script>
     <script src="js/index.js"></script>
+    <script
+        defer
+        crossorigin="anonymous"
+        src="https://exciting-seahorse-5971.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js"
+    ></script>
+    <script
+        defer
+        crossorigin="anonymous"
+        data-clerk-publishable-key="pk_test_ZXhjaXRpbmctc2VhaG9yc2UtNTk3MS5jbGVyay5hY2NvdW50cy5kZXYk"
+        src="https://exciting-seahorse-5971.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js"
+    ></script>
+    <script src="js/clerk-app.js"></script>
 </body>
 </html>

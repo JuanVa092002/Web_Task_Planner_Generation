@@ -6,4 +6,5 @@ data/
 .project
 .settings/
 .env
+.env.local
 

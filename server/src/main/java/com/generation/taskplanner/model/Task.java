@@ -1,5 +1,6 @@
 package com.generation.taskplanner.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -38,4 +39,8 @@ public class Task {
     @NotBlank(message = "El estado no puede estar vacío")
     @Column(nullable = false)
     private String status;
+
+    @JsonIgnore
+    @Column(name = "clerk_user_id", length = 255)
+    private String clerkUserId;
 }

@@ -16,20 +16,18 @@ public class TaskService {
         this.taskRepository = taskRepository;
     }
 
-    public List<Task> obtenerTodas() {
-        return taskRepository.findAll();
+    public List<Task> obtenerTodas(String clerkUserId) {
+        return taskRepository.findAllByClerkUserId(clerkUserId);
     }
 
-    public Optional<Task> obtenerPorId(Long id) {
-        return taskRepository.findById(id);
-    }
-
-    public Task guardar(Task task) {
+    public Task guardarParaUsuario(Task task, String clerkUserId) {
+        task.setId(null);
+        task.setClerkUserId(clerkUserId);
         return taskRepository.save(task);
     }
 
-    public Optional<Task> actualizar(Long id, Task task) {
-        return taskRepository.findById(id).map(existente -> {
+    public Optional<Task> actualizarParaUsuario(Long id, Task task, String clerkUserId) {
+        return taskRepository.findByIdAndClerkUserId(id, clerkUserId).map(existente -> {
             existente.setName(task.getName());
             existente.setDescription(task.getDescription());
             existente.setDueDate(task.getDueDate());
@@ -38,8 +36,8 @@ public class TaskService {
         });
     }
 
-    public boolean eliminar(Long id) {
-        if (!taskRepository.existsById(id)) {
+    public boolean eliminarParaUsuario(Long id, String clerkUserId) {
+        if (!taskRepository.existsByIdAndClerkUserId(id, clerkUserId)) {
             return false;
         }
         taskRepository.deleteById(id);

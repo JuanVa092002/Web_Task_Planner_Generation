@@ -1,15 +1,21 @@
 const API_URL = `${window.APP_API_BASE || 'http://localhost:8080'}/api/tasks`;
 
 class TaskManager {
-    constructor(currentId = 0) {
+    constructor(currentId = 0, getToken) {
         this.tasks = [];
         this.currentId = currentId;
+        this.getToken = getToken || (async () => null);
+    }
+
+    async authHeaders() {
+        const token = await this.getToken();
+        return window.TaskAuth.authorizationHeaders(token);
     }
 
     async addTask(name, description, dueDate, status) {
         const response = await fetch(API_URL, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: await this.authHeaders(),
             body: JSON.stringify({
                 name: name,
                 description: description,
@@ -28,7 +34,10 @@ class TaskManager {
     }
 
     async deleteTask(taskId) {
-        const response = await fetch(`${API_URL}/${taskId}`, { method: 'DELETE' });
+        const response = await fetch(`${API_URL}/${taskId}`, {
+            method: 'DELETE',
+            headers: await this.authHeaders()
+        });
         if (!response.ok && response.status !== 204) {
             throw new Error('No se pudo eliminar la tarea');
         }
@@ -47,7 +56,9 @@ class TaskManager {
     }
 
     async load() {
-        const response = await fetch(API_URL);
+        const response = await fetch(API_URL, {
+            headers: await this.authHeaders()
+        });
         if (!response.ok) {
             throw new Error('No se pudieron cargar las tareas');
         }
@@ -67,7 +78,7 @@ class TaskManager {
     async updateTask(task) {
         const response = await fetch(`${API_URL}/${task.id}`, {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            headers: await this.authHeaders(),
             body: JSON.stringify(task)
         });
 

@@ -12,3 +12,6 @@ server/.project
 server/.settings/
 server/data/
 .vercel/
+
+.env.local
+server/.env.local

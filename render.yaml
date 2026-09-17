@@ -13,3 +13,11 @@ services:
         sync: false
       - key: SPRING_DATASOURCE_PASSWORD
         sync: false
+      - key: CLERK_ISSUER
+        sync: false
+      - key: CLERK_JWK_SET_URI
+        sync: false
+      - key: CLERK_AUTHORIZED_PARTIES
+        sync: false
+      - key: CLERK_SECRET_KEY
+        sync: false
